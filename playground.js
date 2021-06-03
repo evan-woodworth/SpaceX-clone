@@ -83,10 +83,33 @@ const launchpadOneData = `{
 }
 `
 
+const fetchRoadster = (_id) => {
+    Roadster.findOne({_id}, (err, roadster)=>{
+        if (err) console.log(err);
+        console.log(roadster);
+    })
+}
+const fetchRoadsters = async () => {
+    Roadster.find({}, (err, roadsters)=>{
+        if (err) console.log(err);
+        console.log(roadsters);
+    })
+}
+const updateRoadster = async (_id, name) => {
+    Roadster.findOneAndUpdate({_id}, {name}, {new:true}, (error, roadster)=>console.log(`${error?error:roadster}`));
+}
+const deleteRoadster = async (_id) => {
+    Roadster.remove({_id});
+    console.log("deleted... 'kay")
+}
+
 // parse
 let roadsterObj = JSON.parse(roadsterOneData);
 let launchpadObj = JSON.parse(launchpadOneData);
 
 // run function
 // createRoadster(roadsterObj);
-createLaunchpad(launchpadObj);
+// createLaunchpad(launchpadObj);
+// fetchRoadster("60b8e296bcb0f30618fd8d3b")
+fetchRoadsters();
+// updateRoadster("60b8e296bcb0f30618fd8d3b", "Yadda Yadda")
