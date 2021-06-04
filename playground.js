@@ -116,8 +116,6 @@ let launchpadObj = JSON.parse(launchpadOneData);
 
 const axios = require('axios');
 
-
-
 const models = [
     {
         Model: require("./models/capsule"),

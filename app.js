@@ -1,7 +1,5 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const Launchpad = require('./models/launchpad');
-
 const app = express();
 const PORT = process.env.PORT || 8000;
 
@@ -21,7 +19,28 @@ db.on('error', ()=>{
 })
 
 // import models
-const Roadster = require('./models/roadster')
+const Launchpad = require('./models/launchpad');
+const Roadster = require('./models/roadster');
+const Capsule = require('./models/capsule');
+const Core = require('./models/core');
+const Crew = require('./models/crew');
+const Dragon = require('./models/dragon');
+const Rocket = require('./models/rocket');
+const Ship = require('./models/ship');
+
+// Helper Functions
+const fetchDataAll = async (Model, res) => {
+    Model.find({}, (error, items)=>{
+        console.log(error?error:items)
+        res.json(items)
+    })
+}
+const fetchDataOne = (Model, _id, res) => {
+    Model.findOne({ _id }, (error, item) => {
+        console.log(error?error:item)
+        res.json(item)
+    })
+}
 
 // ROUTES
 app.get('/', (req,res)=>{
@@ -71,6 +90,55 @@ app.get('/launchpad/:id', (req, res) => {
     }
     fetchLaunchpad(_id)
 })
+// Capsule
+app.get('/capsule', (req,res)=>{
+    fetchDataAll(Capsule, res)
+})
+app.get('/capsule/:id', (req, res) => {
+    let _id = req.params.id;
+    fetchDataOne(Capsule, _id, res);
+})
+// Core
+app.get('/core', (req,res)=>{
+    fetchDataAll(Core, res)
+})
+app.get('/core/:id', (req, res) => {
+    let _id = req.params.id;
+    fetchDataOne(Core, _id, res);
+})
+// Crew
+app.get('/crew', (req,res)=>{
+    fetchDataAll(Crew, res)
+})
+app.get('/crew/:id', (req, res) => {
+    let _id = req.params.id;
+    fetchDataOne(Crew, _id, res);
+})
+// Dragon
+app.get('/dragon', (req,res)=>{
+    fetchDataAll(Dragon, res)
+})
+app.get('/dragon/:id', (req, res) => {
+    let _id = req.params.id;
+    fetchDataOne(Dragon, _id, res);
+})
+// Rocket
+app.get('/rocket', (req,res)=>{
+    fetchDataAll(Rocket, res)
+})
+app.get('/rocket/:id', (req, res) => {
+    let _id = req.params.id;
+    fetchDataOne(Rocket, _id, res);
+})
+// Ship
+app.get('/ship', (req,res)=>{
+    fetchDataAll(Ship, res)
+})
+app.get('/ship/:id', (req, res) => {
+    let _id = req.params.id;
+    fetchDataOne(Ship, _id, res);
+})
+
 app.put('/roadster/:id/edit', (req,res)=>{
     let _id = req.params.id;
     let name = req.body.name;
