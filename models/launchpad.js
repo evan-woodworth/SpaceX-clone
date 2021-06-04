@@ -48,13 +48,7 @@ const launchpadSchema = new mongoose.Schema({
     "launch_successes": {
       "type": "Number",
       "default": 0
-    },
-    "rockets": [
-      "UUID"
-    ],
-    "launches": [
-      "UUID"
-    ]
+    }
 })
 
 launchpadSchema.methods.intro = ()=>{

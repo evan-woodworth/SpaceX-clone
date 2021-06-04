@@ -71,6 +71,17 @@ app.get('/launchpad/:id', (req, res) => {
     }
     fetchLaunchpad(_id)
 })
+app.put('/roadster/:id/edit', (req,res)=>{
+    let _id = req.params.id;
+    let name = req.body.name;
+    const updateRoadster = async (_id, name) => {
+        Roadster.findOneAndUpdate({_id}, {name}, {new:true}, (error, roadster)=>{
+            console.log(`${error?error:roadster}`)
+            res.redirect(`/roadster/${_id}`);
+        });
+    }
+    updateRoadster(_id, name);
+})
 app.listen(PORT, ()=>{
     console.log(`🎧Listening on ${PORT}`)
 })

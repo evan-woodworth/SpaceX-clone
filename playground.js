@@ -111,5 +111,47 @@ let launchpadObj = JSON.parse(launchpadOneData);
 // createRoadster(roadsterObj);
 // createLaunchpad(launchpadObj);
 // fetchRoadster("60b8e296bcb0f30618fd8d3b")
-fetchRoadsters();
+// fetchRoadsters();
 // updateRoadster("60b8e296bcb0f30618fd8d3b", "Yadda Yadda")
+
+const axios = require('axios');
+
+
+
+const models = [
+    {
+        Model: require("./models/capsule"),
+        path: "capsules"
+    },
+    {
+        Model: require("./models/core"),
+        path: "cores"
+    },
+    {
+        Model: require("./models/crew"),
+        path: "crew"
+    },
+    {
+        Model: require("./models/dragon"),
+        path: "dragons"
+    },
+    {
+        Model: require("./models/rocket"),
+        path: "rockets"
+    },
+    {
+        Model: require("./models/ship"),
+        path: "ships"
+    }
+]
+
+const populateData = async (path, Model) => {
+    const responseData = await axios.get(`https://api.spacexdata.com/v4/${path}`);
+    for await (const item of responseData.data) {
+        Model.create(item, (error, newItem)=>console.log(error?error:newItem))
+    }
+}
+
+models.forEach( async (model) => {
+    await populateData(model.path, model.Model);
+})
